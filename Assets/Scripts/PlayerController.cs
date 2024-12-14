@@ -17,10 +17,17 @@ public class PlayerController : MonoBehaviour
     public float negativeSpeedLimit = 6f;
     private FacingDirection direction = FacingDirection.right;
 
+
+    public float apHeight = 7f;
+    public float apTime = 0.7f;
+    private float gravity;
+    public float jumpForce;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        gravity = -2 * apHeight / (apTime * apTime);
+        jumpForce = 2 * apHeight / apTime;
     }
 
     // Update is called once per frame
@@ -36,6 +43,9 @@ public class PlayerController : MonoBehaviour
         Vector2 playerInput = new Vector2();
         //Gets inputs from keybinds A and D 
         playerInput.x = Input.GetAxisRaw("Horizontal");
+
+        //Gets Inputs from Keybinds W and S
+        playerInput.y = Input.GetAxisRaw("Vertical");
         MovementUpdate(playerInput);
 
         playerBody.velocity = velocity;
@@ -65,6 +75,10 @@ public class PlayerController : MonoBehaviour
             direction = FacingDirection.left;
         }
 
+        if (playerInput.y > 0 && IsGrounded = true)
+        {
+            velocity.y = jumpForce;
+        }
 
     }
 
