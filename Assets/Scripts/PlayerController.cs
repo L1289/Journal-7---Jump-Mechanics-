@@ -49,6 +49,15 @@ public class PlayerController : MonoBehaviour
         MovementUpdate(playerInput);
 
         playerBody.velocity = velocity;
+
+        if (velocity.y != 0)
+        {
+            velocity.y += gravity * Time.deltaTime;
+        }
+        else
+        {
+            velocity.y = 0;
+        }
     }
 
     private void MovementUpdate(Vector2 playerInput)
@@ -75,7 +84,7 @@ public class PlayerController : MonoBehaviour
             direction = FacingDirection.left;
         }
 
-        if (playerInput.y > 0 && IsGrounded = true)
+        if (playerInput.y > 0 && velocity.y == 0)
         {
             velocity.y = jumpForce;
         }
