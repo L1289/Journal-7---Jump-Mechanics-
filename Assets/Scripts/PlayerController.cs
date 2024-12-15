@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public float apTime = 0.7f;
     private float gravity;
     public float jumpForce;
+    public float terminalSpeed = 7f;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         IsGrounded();
         Debug.Log(IsGrounded());
+        Debug.Log(velocity.y);
         IsWalking();
         // The input from the player needs to be determined and
         // then passed in the to the MovementUpdate which should
@@ -56,7 +58,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+
             velocity.y = 0;
+
         }
     }
 
@@ -84,9 +88,14 @@ public class PlayerController : MonoBehaviour
             direction = FacingDirection.left;
         }
 
-        if (playerInput.y > 0 && velocity.y == 0)
+        if (playerInput.y > 0)
         {
             velocity.y = jumpForce;
+        }
+
+        if (velocity.y <= -terminalSpeed)
+        {
+            velocity.y = -terminalSpeed;
         }
 
     }
