@@ -1698,6 +1698,12 @@ MonoBehaviour:
   acceleration: 3
   postiveSpeedLimit: 6
   negativeSpeedLimit: 6
+  apHeight: 7
+  apTime: 0.7
+  jumpForce: 0
+  terminalSpeed: 5
+  coyoteTime: 3
+  timerForCoyoteTime: 0
 --- !u!4 &1433354315
 Transform:
   m_ObjectHideFlags: 0
