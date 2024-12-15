@@ -23,11 +23,15 @@ public class PlayerController : MonoBehaviour
     private float gravity;
     public float jumpForce;
     public float terminalSpeed = 7f;
+    public float coyoteTime = 3f;
+    public float timerForCoyoteTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Calcultuing gravity
         gravity = -2 * apHeight / (apTime * apTime);
+        //Calculting jumpforce based off apex height and apex time
         jumpForce = 2 * apHeight / apTime;
     }
 
@@ -52,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
         playerBody.velocity = velocity;
 
+        //Gravity is applied to player when not on the ground
         if (velocity.y != 0)
         {
             velocity.y += gravity * Time.deltaTime;
@@ -88,14 +93,36 @@ public class PlayerController : MonoBehaviour
             direction = FacingDirection.left;
         }
 
-        if (playerInput.y > 0)
+        //Addes jumps force well holding input
+        if (playerInput.y > 0 && velocity.y == 0)
         {
             velocity.y = jumpForce;
         }
 
+        //limits speed of the player falling
         if (velocity.y <= -terminalSpeed)
         {
             velocity.y = -terminalSpeed;
+        }
+
+
+        //Using deltatime as a timer as soon as player is off the ground
+        if (velocity.y != 0)
+        {
+            timerForCoyoteTime += Time.deltaTime;
+        }
+        else if (velocity.y == 0)
+        {
+            timerForCoyoteTime = 0;
+        }
+
+        //Checks if player is in the air and their is still time to jump within coyoteTime
+        if (timerForCoyoteTime <= coyoteTime)
+        {
+            if (playerInput.y > 0 && velocity.y != 0)
+            {
+                velocity.y = jumpForce;
+            }
         }
 
     }
